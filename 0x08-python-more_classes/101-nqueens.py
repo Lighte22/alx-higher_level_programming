@@ -115,9 +115,12 @@ if __name__ == "__main__":
                 else:
 
                     nqueens(x + 1)  # moves on to next x value to continue
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 9f55f924f172708935cd3a75ef92f595a5e3e091
     # start the recursive process at x = 0
 
     nqueens(0)
