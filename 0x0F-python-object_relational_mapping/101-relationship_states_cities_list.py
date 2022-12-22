@@ -1,15 +1,21 @@
 #!/usr/bin/python3
 """
-Lists all states from the database hbtn_0e_0_usa.
-Usage: ./0-select_states.py <mysql username> \
-                            <mysql password> \
-                             <database name>
+Lists all States and corresponding Cities in the database hbtn_0e_101_usa.
 """
 import sys
-import MySQLdb
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from relationship_state import State
+from relationship_city import City
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `states`")
-    [print(state) for state in c.fetchall()]
+    engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
+                           .format(sys.argv[1], sys.argv[2], sys.argv[3]),
+                           pool_pre_ping=True)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    for state in session.query(State).order_by(State.id):
+        print("{}: {}".format(state.id, state.name))
+        for city in state.cities:
+            print("    {}: {}".format(city.id, city.name))
