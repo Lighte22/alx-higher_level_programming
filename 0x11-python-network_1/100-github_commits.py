@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""Lists the 10 most recent commits on a given GitHub repository.
-Usage: ./100-github_commits.py <repository name> <repository owner>
+"""lists the 10 most recent commits on a given GitHub repository.
 """
 import sys
 import requests
@@ -19,4 +18,3 @@ if __name__ == "__main__":
                 commits[i].get("commit").get("author").get("name")))
     except IndexError:
         pass
-
